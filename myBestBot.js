@@ -32,33 +32,50 @@ class Bot {
 
     generateRandomPlay(){
         const randomFactor = Math.random()*10;
-        console.log(this.lastMove);
 
-        if(randomFactor <= 3.3){
+        if(randomFactor <= 3){
             return 'R';
-        } else if(randomFactor > 3.3 && randomFactor <= 6.6){
+        } else if(randomFactor > 3 && randomFactor <= 6){
             return 'P';
-        } else {
+        } else if(randomFactor > 6 && randomFactor <= 9){
             return 'S';
+        } else if(randomFactor > 9 && randomFactor <= 9.7 && this.runningTotalP1.D < 100){
+            return 'D';
+        } else {
+            return 'W';
         };
     };
 
     generateResponsivePlay(){
-
         const randomFactor = Math.random();
-
-        if(randomFactor <= this.runningTotalP2.S/this.numberOfgamesPlayed){
-            return 'R';
-        } else if(randomFactor > this.runningTotalP2.R/this.numberOfgamesPlayed && randomFactor <= this.runningTotalP2.P/this.numberOfgamesPlayed){
+        const numberofRPS = this.runningTotalP2.R+this.runningTotalP2.P+this.runningTotalP2.S;
+        if(randomFactor <= this.runningTotalP2.R/numberofRPS){
             return 'P';
-        } else {
+        } else if(randomFactor > this.runningTotalP2.R/this.numberOfgamesPlayed && randomFactor <= (this.runningTotalP2.R+this.runningTotalP2.P)/numberofRPS){
             return 'S';
-        };
+        } else {
+            return 'R';
+        }
+
     };
 
     makeMove(gamestate){
         this.updateRunningTotals(gamestate);
-        if(this.runningTotalP2.D>100){
+        if(this.numberOfgamesPlayed < 50){
+            console.log(this.runningTotalP2);
+            return this.generateRandomPlay();
+        }
+
+        if(this.runningTotalP2.R/this.numberOfgamesPlayed > 0.9){
+            return 'P'
+        }
+
+        if(this.runningTotalP2.P/this.numberOfgamesPlayed > 0.9){
+            return 'S'
+        }
+
+        if(this.runningTotalP2.S/this.numberOfgamesPlayed > 0.9){
+            return 'R'
         }
 
         if(this.numberOfgamesPlayed > 1 && this.runningTotalP2.D < 100 && this.lastMove.p1 === this.lastMove.p2){
@@ -69,9 +86,6 @@ class Bot {
             return 'D';
         }
 
-        if(this.numberOfgamesPlayed < 50){
-            return this.generateRandomPlay();
-        }
 
         return this.generateResponsivePlay();
     }

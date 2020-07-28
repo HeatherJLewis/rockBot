@@ -51,6 +51,10 @@ class Bot {
             }
         }
 
+        if(gamestate.rounds.length === 50){
+            const result = Object.keys(runningTotalsP2).reduce((a, b) => runningTotalsP2[a] > runningTotalsP2[b] ? a : b);
+            console.log(result) // find which one is higher and then
+        }
         return generateSkewedRandomPlays(dynamiteCountP1);
     }
 }

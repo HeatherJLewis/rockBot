@@ -47,12 +47,24 @@ class Bot {
 
         const randomFactor = Math.random()*10;
 
-        if(randomFactor <= 3.3){
+        // if(randomFactor <= 3.3){
+        //     return 'R';
+        // } else if(randomFactor > 3.3 && randomFactor <= 6.6){
+        //     return 'P';
+        // } else {
+        //     return 'S';
+        // };
+
+        if(randomFactor <= 8){
             return 'R';
-        } else if(randomFactor > 3.3 && randomFactor <= 6.6){
+        } else if(randomFactor > 8 && randomFactor <= 8.5){
             return 'P';
-        } else {
+        } else if(randomFactor > 8.5 && randomFactor <= 9){
             return 'S';
+        } else if(randomFactor > 9 && randomFactor <= 9.7 && dynamiteCountP1 < 100){
+            return 'D';
+        } else {
+            return 'W';
         };
 
     }
