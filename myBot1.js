@@ -2,11 +2,11 @@ const { generateSkewedRandomPlays } = require('./generateSkewedRandomPlays')
 
 class Bot {
     makeMove(gamestate) {
-        let dynamiteCount = 0;
+        let dynamiteCountP1 = 0;
         let dynamiteCountP2 = 0;
 
         gamestate.rounds.forEach(round => {
-            return round.p1 ==='D' ? dynamiteCount += 1 : dynamiteCount;
+            return round.p1 ==='D' ? dynamiteCountP1 += 1 : dynamiteCountP1;
         });
 
         gamestate.rounds.forEach(round => {
@@ -45,13 +45,13 @@ class Bot {
             }
         }
 
-        if(gamestate.rounds.length > 0 && dynamiteCount < 100){
+        if(gamestate.rounds.length > 0 && dynamiteCountP1 < 100){
             if(lastMove.p1 === lastMove.p2){
                 return 'D';
             }
         }
 
-        return generateSkewedRandomPlays(dynamiteCount);
+        return generateSkewedRandomPlays(dynamiteCountP1);
     }
 }
 

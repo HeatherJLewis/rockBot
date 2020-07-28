@@ -1,9 +1,14 @@
 class Bot {
     makeMove(gamestate) {
-        let dynamiteCount = 0;
+        let dynamiteCountP1 = 0;
+        let dynamiteCountP2 = 0;
 
         gamestate.rounds.forEach(round => {
-            return round.p1 ==='D' ? dynamiteCount += 1 : dynamiteCount;
+            return round.p1 ==='D' ? dynamiteCountP1 += 1 : dynamiteCountP1;
+        });
+
+        gamestate.rounds.forEach(round => {
+            return round.p2 ==='D' ? dynamiteCountP2 += 1 : dynamiteCountP2;
         });
 
         let runningTotalsP1 = {
@@ -34,7 +39,7 @@ class Bot {
 
         const lastMove = gamestate.rounds[(gamestate.rounds.length)-1];
 
-        if(gamestate.rounds.length > 0 && dynamiteCount < 100){
+        if(gamestate.rounds.length > 0 && dynamiteCountP1 < 100){
             if(lastMove.p1 === lastMove.p2){
                 return 'D';
             }
@@ -42,18 +47,13 @@ class Bot {
 
         const randomFactor = Math.random()*10;
 
-        if(randomFactor <= 3){
+        if(randomFactor <= 3.3){
             return 'R';
-        } else if(randomFactor > 3 && randomFactor <= 6){
+        } else if(randomFactor > 3.3 && randomFactor <= 6.6){
             return 'P';
-        } else if(randomFactor > 6 && randomFactor <= 9){
-            return 'S';
-        } else if(randomFactor > 9 && randomFactor <= 9.7 && dynamiteCount < 100){
-            return 'D';
         } else {
-            return 'W';
+            return 'S';
         };
-
 
     }
 }
